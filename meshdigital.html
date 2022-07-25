@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<script src='https://unpkg.com/@tryghost/content-api@1.11.0/umd/content-api.min.js'></script>
+<script>
+	
+    const api = new GhostContentAPI({
+        url: 'website',
+		key: 'key',
+		version: 'v5.2.4'
+    });
+	
+	async function getSinglePost(postSlug) {
+		return await api.posts
+		.read({
+			slug: postSlug
+		})
+		.catch(err => {
+			console.error(err);
+		});
+	}
+	
+	window.onload = async function() {
+		const options = ['forced-transformation-and-digital-darwinism', "the-importance-of-strategic-networks-in-the-digital-business", 
+		"a-digital-marketing-performance-metrics-primer-for-b2b-firms", "why-are-business-analytics-and-decision-making-essential-in-businesses-of-all-sizes-and-types-today"];
+		const random = Math.floor(Math.random() * options.length);
+		
+		const post = await getSinglePost(options[random]);
+		// console.log(post);
+		document.body.innerHTML += post.html;
+	};
+</script>
+
+	<head>
+		<title>Mesh Digital LLC</title>
+	</head>
+	
+	<body>
+		<p id='replace'></p>
+	</body>
+	
+</html>
